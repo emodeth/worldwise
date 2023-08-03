@@ -10,7 +10,9 @@ function PageNav() {
       <ul>
         <NavLink to="/pricing">Pricing</NavLink>
         <NavLink to="/product">Product</NavLink>
-        <NavLink to="/login">Login</NavLink>
+        <NavLink to="/login" className={styles.ctaLink}>
+          Login
+        </NavLink>
       </ul>
     </nav>
   );
