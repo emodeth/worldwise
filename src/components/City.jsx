@@ -42,7 +42,8 @@ function City() {
       <div className={styles.row}>
         <h6>City name</h6>
         <h3>
-          <span>{emoji ? flagemojiToPNG(emoji) : ""}</span> {cityName}
+          <img src={emoji} alt={cityName} />
+          {cityName}
         </h3>
       </div>
 

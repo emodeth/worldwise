@@ -9,18 +9,24 @@ const formatDate = (date) =>
     year: "numeric",
   }).format(new Date(date));
 
-function CityItem({ city }) {
-  const flagemojiToPNG = (flag) => {
-    var countryCode = Array.from(flag, (codeUnit) => codeUnit.codePointAt())
-      .map((char) => String.fromCharCode(char - 127397).toLowerCase())
-      .join("");
-    return (
-      <img src={`https://flagcdn.com/24x18/${countryCode}.png`} alt="flag" />
-    );
-  };
+const flagemojiToPNG = (flag) => {
+  var countryCode = Array.from(flag, (codeUnit) => codeUnit.codePointAt())
+    .map((char) => String.fromCharCode(char - 127397).toLowerCase())
+    .join("");
+  return (
+    <img src={`https://flagcdn.com/24x18/${countryCode}.png`} alt="flag" />
+  );
+};
 
-  const { currentCity } = useCities();
+function CityItem({ city }) {
+  const { currentCity, deleteCity } = useCities();
   const { cityName, emoji, date, id, position } = city;
+  console.log();
+
+  function handleClick(e) {
+    e.preventDefault();
+    deleteCity(id);
+  }
 
   return (
     <li key={city.id}>
@@ -31,11 +37,17 @@ function CityItem({ city }) {
         }`}
       >
         <span className={styles.emoji}>
-          {emoji ? flagemojiToPNG(emoji) : ""}
+          {emoji.includes("flagcdn") ? (
+            <img src={emoji} alt={cityName} />
+          ) : (
+            flagemojiToPNG(emoji)
+          )}
         </span>
         <h3 className={styles.name}>{cityName}</h3>
         <time className={styles.date}>{formatDate(date)}</time>
-        <button className={styles.deleteBtn}>&times;</button>
+        <button className={styles.deleteBtn} onClick={handleClick}>
+          &times;
+        </button>
       </Link>
     </li>
   );
